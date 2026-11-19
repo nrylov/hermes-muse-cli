@@ -33,7 +33,7 @@ Do not use for vague exploration. Hermes reviews every diff before accepting it.
 ## Headless one-shot (preferred)
 
 ```
-terminal(command="python3 skills/muse-cli/scripts/muse_run.py /tmp/task.txt --cwd /path/to/repo --max-steps 10")
+terminal(command="python3 ~/.hermes/skills/autonomous-ai-agents/muse-cli/scripts/muse_run.py /tmp/task.txt --cwd /path/to/repo --max-steps 10")
 ```
 
 Write the prompt to a file with `write_file` first. The helper returns `ok`,
