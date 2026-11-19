@@ -60,6 +60,7 @@ class Run(unittest.TestCase):
             os.makedirs(os.path.join(d, ".git"))
             cancelled = fixture_text().replace('"terminal": "completed"', '"terminal": "cancelled"')
             orig = muse_run.subprocess.run
+            orig_which = muse_run.shutil.which
 
             class P:
                 returncode = 0
@@ -67,10 +68,12 @@ class Run(unittest.TestCase):
                 stderr = ""
 
             muse_run.subprocess.run = lambda *a, **k: P() if a[0][0] == "muse" else orig(*a, **k)
+            muse_run.shutil.which = lambda name: "/bin/muse"  # stub: CI has no muse binary
             try:
                 res = muse_run.run("/tmp/x", d)
             finally:
                 muse_run.subprocess.run = orig
+                muse_run.shutil.which = orig_which
             self.assertFalse(res["ok"])
             self.assertEqual(res["terminal"], "cancelled")
 

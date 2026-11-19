@@ -72,10 +72,10 @@ def git_diff_stat(cwd):
 
 
 def run(prompt_file, cwd, approval_mode="never", max_steps=10, timeout=600, model=None):
-    if not shutil.which("muse"):
-        return {"ok": False, "error": "muse binary not found on PATH"}
     if not os.path.isdir(os.path.join(cwd, ".git")):
         return {"ok": False, "error": "cwd is not a git repo root: %s" % cwd}
+    if not shutil.which("muse"):
+        return {"ok": False, "error": "muse binary not found on PATH"}
     cmd = build_command(prompt_file, approval_mode, max_steps, model)
     try:
         proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout)
